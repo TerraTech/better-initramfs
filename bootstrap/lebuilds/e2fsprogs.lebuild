@@ -1,0 +1,20 @@
+#!/bin/sh
+name='e2fsprogs'
+version='1.42.10'
+sources=( "http://prdownloads.sourceforge.net/$name/$name-$version.tar.gz" )
+homepage='http://e2fsprogs.sourceforge.net'
+license='GPLv2'
+
+build_cmd="
+	cd /source/${name}-${version} && \
+	LDFLAGS=-static ./configure --disable-elf-shlibs && \
+	make && \
+	cp -pv e2fsck/e2fsck /usr/bin &&
+	strip /usr/bin/e2fsck
+"
+
+deploy="/source/${name}-${version}/e2fsck/e2fsck"
+
+fetch_source
+install_source
+build_source
